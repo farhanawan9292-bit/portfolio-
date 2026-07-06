@@ -235,6 +235,21 @@ function HeroSection() {
           </Badge>
         </motion.div>
 
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mb-6"
+        >
+          <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden ring-4 ring-amber-400/40 shadow-xl shadow-amber-500/20">
+            <img
+              src="/profile.jpeg"
+              alt="Farhan Javed Awan"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </motion.div>
+
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -351,8 +366,12 @@ function AboutSection() {
           <FadeInWhenVisible direction="left" className="md:col-span-2">
             <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-br from-amber-50 to-orange-50">
               <div className="p-8">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-6 shadow-lg shadow-amber-500/30">
-                  <span className="text-4xl font-bold text-white">FJ</span>
+                <div className="w-24 h-24 rounded-2xl overflow-hidden mb-6 shadow-lg shadow-amber-500/30 ring-2 ring-amber-400/50">
+                  <img
+                    src="/profile.jpeg"
+                    alt="Farhan Javed Awan"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <h3 className="text-2xl font-bold mb-1">Farhan Javed Awan</h3>
                 <p className="text-muted-foreground mb-4">Social Media Manager & Marketer</p>
