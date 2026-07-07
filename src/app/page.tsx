@@ -650,10 +650,11 @@ function ContactSection() {
     const form = e.currentTarget
     const formData = new FormData(form)
     const templateParams = {
-      from_name: formData.get('from_name'),
-      from_email: formData.get('from_email'),
-      subject: formData.get('subject'),
+      name: formData.get('name'),
+      email: formData.get('email'),
+      title: formData.get('title'),
       message: formData.get('message'),
+      time: new Date().toLocaleString(),
     }
 
     try {
@@ -755,7 +756,7 @@ function ContactSection() {
                       <label className="block text-sm font-medium mb-1.5">Full Name</label>
                       <input
                         type="text"
-                        name="from_name"
+                        name="name"
                         required
                         className="w-full px-4 py-2.5 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition"
                         placeholder="Your name"
@@ -765,7 +766,7 @@ function ContactSection() {
                       <label className="block text-sm font-medium mb-1.5">Email</label>
                       <input
                         type="email"
-                        name="from_email"
+                        name="email"
                         required
                         className="w-full px-4 py-2.5 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition"
                         placeholder="you@example.com"
@@ -775,7 +776,7 @@ function ContactSection() {
                       <label className="block text-sm font-medium mb-1.5">Subject</label>
                       <input
                         type="text"
-                        name="subject"
+                        name="title"
                         required
                         className="w-full px-4 py-2.5 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition"
                         placeholder="Project inquiry"
