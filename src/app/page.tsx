@@ -639,6 +639,38 @@ function EducationSection() {
 
 function ContactSection() {
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setSending(true)
+    setError('')
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const templateParams = {
+      from_name: formData.get('from_name'),
+      from_email: formData.get('from_email'),
+      subject: formData.get('subject'),
+      message: formData.get('message'),
+    }
+
+    try {
+      const emailjs = (await import('@emailjs/browser')).default
+      await emailjs.send(
+        'service_ndtiswa',
+        'template_wbivtri',
+        templateParams,
+        'ALP_HWlp0gtomYL6s'
+      )
+      setSubmitted(true)
+    } catch {
+      setError('Something went wrong. Please try again or email me directly.')
+    } finally {
+      setSending(false)
+    }
+  }
 
   return (
     <section id="contact" className="py-20 sm:py-28">
@@ -718,17 +750,12 @@ function ContactSection() {
                     </Button>
                   </div>
                 ) : (
-                  <form
-                    className="space-y-5"
-                    onSubmit={(e) => {
-                      e.preventDefault()
-                      setSubmitted(true)
-                    }}
-                  >
+                  <form className="space-y-5" onSubmit={handleSubmit}>
                     <div>
                       <label className="block text-sm font-medium mb-1.5">Full Name</label>
                       <input
                         type="text"
+                        name="from_name"
                         required
                         className="w-full px-4 py-2.5 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition"
                         placeholder="Your name"
@@ -738,6 +765,7 @@ function ContactSection() {
                       <label className="block text-sm font-medium mb-1.5">Email</label>
                       <input
                         type="email"
+                        name="from_email"
                         required
                         className="w-full px-4 py-2.5 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition"
                         placeholder="you@example.com"
@@ -747,6 +775,7 @@ function ContactSection() {
                       <label className="block text-sm font-medium mb-1.5">Subject</label>
                       <input
                         type="text"
+                        name="subject"
                         required
                         className="w-full px-4 py-2.5 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition"
                         placeholder="Project inquiry"
@@ -756,13 +785,17 @@ function ContactSection() {
                       <label className="block text-sm font-medium mb-1.5">Message</label>
                       <textarea
                         required
+                        name="message"
                         rows={4}
                         className="w-full px-4 py-2.5 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition resize-none"
                         placeholder="Tell me about your project..."
                       />
                     </div>
-                    <Button type="submit" size="lg" className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-lg shadow-amber-500/25">
-                      <Send className="w-4 h-4 mr-2" /> Send Message
+                    {error && (
+                      <p className="text-sm text-red-500 text-center">{error}</p>
+                    )}
+                    <Button type="submit" size="lg" disabled={sending} className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-lg shadow-amber-500/25 disabled:opacity-60">
+                      <Send className="w-4 h-4 mr-2" /> {sending ? 'Sending...' : 'Send Message'}
                     </Button>
                   </form>
                 )}
